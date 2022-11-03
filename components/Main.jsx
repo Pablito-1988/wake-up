@@ -4,7 +4,8 @@ import { View, Text } from 'react-native'
 import Header from './Header'
 import Home from './Home';
 import Tempo from './Tempo/Tempo';
-import Location from './Location';
+import Location from './Map/Location';
+import  Map  from './Map/Map';
 import { Switch , Route } from 'react-router-native';
 
 const Main = () => {
@@ -16,6 +17,7 @@ const Main = () => {
             <Route exact path={'/'} component={Home}></Route>
             <Route exact path={'/tempo'} component={Tempo}></Route>
             <Route exact path={'/location'} component={Location}></Route>
+            <Route exact path={'/map'} component={Map}></Route>
         </Switch>
         
     </View>

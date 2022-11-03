@@ -5,8 +5,9 @@ import {
   StyleSheet,
   Dimensions,
   TextInput,
-  Pressable,
+  Pressable
 } from "react-native";
+import { Link } from "react-router-native";
 import Temporizador from "./Temporizador";
 
 const style = StyleSheet.create({
@@ -48,17 +49,17 @@ const style = StyleSheet.create({
 });
 
 const Tempo = () => {
-  const [hour, setHour] = useState(0);
-  const [minute, setMinute] = useState(0);
+  const [hour, setHour] = useState('');
+  const [minute, setMinute] = useState('');
   const [showTimer, setShowTimer] = useState(false);
   const [showSettings, setShowSettings] = useState(true);
-  console.log("hs " + hour + ":" + minute);
+  
 
   function hourTimer(e) {
     if (Number(e) <= 24) {
       setHour(e /* * 3600000 */);
     } else {
-      setHour(0);
+      setHour('');
       alert("no hay tantas horas en un dia");
     }
   }
@@ -66,7 +67,7 @@ const Tempo = () => {
     if (Number(e) <= 59) {
       setMinute(e /* * 60000 */);
     } else {
-      setMinute(0);
+      setMinute('');
       alert("una hora tiene 60 min..... elegi la de al lado...");
     }
   }
@@ -78,8 +79,8 @@ const Tempo = () => {
     if (showTimer === true) {
       setShowTimer(false);
       setShowSettings(true);
-      setHour(0)
-      setMinute(0)
+      setHour('')
+      setMinute('')
 
     }
   }
@@ -110,6 +111,9 @@ const Tempo = () => {
             </View>
             <Pressable onPress={setTimerOn} style={style.button}>
               <Text>Empezar</Text>
+            </Pressable>
+            <Pressable style={style.button}>
+                <Link to={'/'}><Text>Volver</Text></Link>
             </Pressable>
           </>
         )}
