@@ -61,10 +61,10 @@ const Map = () => {
   }, [ location,destiny]);
 
 
-  if((distance*1000) < 200 && (distance*1000) != 0 ){
-    Alert('estas cerca')
-    console.log('estas cerca despertate')
-  }
+  useEffect(()=>{
+    const distanceInMtr = distance*1000
+    distanceInMtr<200 ? console.log('estas cerca'): console.log('segui durmiendo')
+  },[distance])
 
   return (
     <>
