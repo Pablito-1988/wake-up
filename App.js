@@ -9,17 +9,18 @@ import {
 } from "react-native";
 import Main from "./components/Main";
 import { NativeRouter } from "react-router-native";
+import CustomComponent from "./components/Context/LocationContext";
 
 export default function App() {
   return (
     <NativeRouter>
-      <SafeAreaView style={{ flex: 1, backgroundColor: "red" }}>
-        <ScrollView>
-          <Main />
-        </ScrollView>
-      </SafeAreaView>
+      <CustomComponent>
+        <SafeAreaView style={{ flex: 1 }}>
+          <ScrollView>
+            <Main />
+          </ScrollView>
+        </SafeAreaView>
+      </CustomComponent>
     </NativeRouter>
   );
 }
-
-

@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Dimensions, Alert } from "react-native";
+import React, { useEffect, useState, useContext } from "react";
+import { View, Text, StyleSheet, Dimensions, Alert, Pressable } from "react-native";
 import MapView, { Circle, Marker } from "react-native-maps";
 import * as Location from "expo-location";
 import Calc from "./Math";
+import { LocationContext } from "../Context/LocationContext";
 
 const style = StyleSheet.create({
   map: {
     width: Dimensions.get("window").width,
-    height: 400,
+    height: Dimensions.get("window").height,
   },
   container: {
     flex: 1,
@@ -17,81 +18,50 @@ const style = StyleSheet.create({
   },
 });
 
-const Map = () => {
-  const [location, setLocation] = useState(null);
-  const [destiny, setDestiny] = useState(null);
-  const [distance, setDistance] = useState(null);
+const Map = (props) => {
+  const { ubicacion, mapDestiny, mylocation , distance , destinyErrace } = useContext(LocationContext);
 
-  console.log(location);
-  console.log(destiny);
-  console.log(Math.floor(distance*1000))
 
-  useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        setErrorMsg("Permission to access location was denied");
-        return;
-      }
-
-      let location = await Location.getCurrentPositionAsync({});
-      console.log(location);
-      setLocation({
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
-      });
-    })();
-  }, []);
-
+ 
   function selectDestiny(e) {
-    setDestiny(e.nativeEvent.coordinate);
+    mapDestiny(e.nativeEvent.coordinate);
   }
 
   useEffect(() => {
-    if (location && destiny) {
-      setDistance(
-        Calc(
-          location.latitude,
-          location.longitude,
-          destiny.latitude,
-          destiny.longitude
-        )
-      );
-    }
-  }, [ location,destiny]);
-
-
-  useEffect(()=>{
-    const distanceInMtr = distance*1000
-    distanceInMtr<200 ? console.log('estas cerca'): console.log('segui durmiendo')
-  },[distance])
+    const distanceInMtr = Math.floor(distance * 1000);
+    distanceInMtr < 200
+      ? console.log('estas cerca')
+      : console.log("segui durmiendo");
+  }, [distance]);
 
   return (
     <>
       <View style={style.container}>
-        {location ? (
+        {ubicacion && <Pressable onPress={()=>destinyErrace()}><Text>Eliminar ubicación</Text></Pressable>}
+        {distance && <Text>Faltan: {Math.floor(distance * 1000)}mts</Text>}
+        {mylocation ? (
           <MapView
             style={style.map}
             initialRegion={{
-              latitude: location.latitude,
-              longitude: location.longitude,
-              latitudeDelta: 0.003,
-              longitudeDelta: 0.003,
+              latitude: mylocation.latitude,
+              longitude: mylocation.longitude,
+              latitudeDelta: 0.005,
+              longitudeDelta: 0.005,
             }}
             onPress={selectDestiny}
             userLocationUpdateInterval={5000}
             showsMyLocationButton /* ={true} */
             zoomEnabled
+            
           >
-            <Marker coordinate={location}></Marker>
-            {destiny ? (
+            <Marker coordinate={mylocation}></Marker>
+            {ubicacion ? (
               <>
-                <Circle center={destiny} radius={200}></Circle>
-                <Marker coordinate={destiny}></Marker>
+                <Marker focusable coordinate={ubicacion}></Marker>
               </>
             ) : (
               <>
-                <Marker coordinate={location}></Marker>
+                <Marker coordinate={mylocation}></Marker>
               </>
             )}
           </MapView>
