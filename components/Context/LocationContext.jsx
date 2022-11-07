@@ -12,6 +12,11 @@ const CustomComponent = ({ children }) => {
   const [mylocation, setMyLocation] = useState(null);
   const [temp, setTemp] = useState(0);
   const [distance, setDistance] = useState(null);
+    console.log(temp)
+
+  useEffect(()=>{
+    setTimeout(()=> setTemp(temp + 1 ), 30000)
+  },[temp])
 
 
   useEffect(() => {
@@ -29,7 +34,7 @@ const CustomComponent = ({ children }) => {
         longitude: location.coords.longitude,
       });
     })();
-  }, []);
+  }, [temp]);
 
   const mapDestiny = (e) => {
     setLocation(e);

@@ -7,8 +7,8 @@ import { LocationContext } from "../Context/LocationContext";
 
 const style = StyleSheet.create({
   map: {
-    width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height,
+    width: 400,
+    height:500
   },
   container: {
     flex: 1,
@@ -16,6 +16,18 @@ const style = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  deleteLocationButton:{
+    width:150,
+    height:30,
+    backgroundColor:'red',
+    justifyContent:'center',
+    alignItems:'center',
+    borderRadius:10,
+    marginBottom:15
+  },
+  deleteButtonText:{
+    color:'white'
+  }
 });
 
 const Map = (props) => {
@@ -37,7 +49,7 @@ const Map = (props) => {
   return (
     <>
       <View style={style.container}>
-        {ubicacion && <Pressable onPress={()=>destinyErrace()}><Text>Eliminar ubicación</Text></Pressable>}
+        {ubicacion && <Pressable style={style.deleteLocationButton} onPress={()=>destinyErrace()}><Text style={style.deleteButtonText}>Eliminar ubicación</Text></Pressable>}
         {distance && <Text>Faltan: {Math.floor(distance * 1000)}mts</Text>}
         {mylocation ? (
           <MapView

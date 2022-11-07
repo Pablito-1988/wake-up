@@ -21,7 +21,7 @@ const style = StyleSheet.create({
     flexDirection: "row",
     width: Dimensions.get("window").width,
     justifyContent: "space-evenly",
-    marginTop: 50,
+    marginTop: 40,
     alignContent: "center",
   },
 
@@ -33,19 +33,36 @@ const style = StyleSheet.create({
   input: {
     width: 50,
     height: 50,
-    backgroundColor: "white",
+    backgroundColor: "grey",
     borderRadius: 10,
     textAlign: "center",
+    marginTop:10,
+    color:'white'
   },
-  button: {
+  buttonStart: {
     width: 120,
     height: 30,
-    backgroundColor: "white",
+    backgroundColor: "green",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 10,
     marginTop: 50,
   },
+  buttonBack: {
+    width: 120,
+    height: 30,
+    backgroundColor: "red",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    marginTop: 50,
+  },
+  buttonText:{
+    color:'white'
+  },
+  tempTitle:{
+    fontSize:24
+  }
 });
 
 const Tempo = () => {
@@ -90,7 +107,7 @@ const Tempo = () => {
       <View style={style.tempoContainer}>
         {showSettings && (
           <>
-            <Text>CUANTO TIEMPO QUERES DORMIR?</Text>
+            <Text style={style.tempTitle}>CUANTO TIEMPO QUERES DORMIR?</Text>
             <View style={style.inputWrapper}>
               <View style={style.inputContainer}>
                 <Text>HORAS</Text>
@@ -109,11 +126,11 @@ const Tempo = () => {
                 ></TextInput>
               </View>
             </View>
-            <Pressable onPress={setTimerOn} style={style.button}>
-              <Text>Empezar</Text>
+            <Pressable onPress={setTimerOn} style={style.buttonStart}>
+              <Text style={style.buttonText}>Empezar</Text>
             </Pressable>
-            <Pressable style={style.button}>
-                <Link to={'/'}><Text>Volver</Text></Link>
+            <Pressable style={style.buttonBack}>
+                <Link to={'/'}><Text style={style.buttonText}>Volver</Text></Link>
             </Pressable>
           </>
         )}
